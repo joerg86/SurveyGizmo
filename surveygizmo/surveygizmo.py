@@ -1,6 +1,7 @@
 
 import time
 from api import base
+import requests
 
 
 class ImproperlyConfigured(Exception):
@@ -68,6 +69,7 @@ class API(object):
 
         self._resources = {}
         self._session = None
+        self._requests_session = requests.Session()
 
         self._import_api()
 

@@ -176,7 +176,7 @@ class Resource(object):
 
             response = self.api._session.get(url, params=params, **config.requests_kwargs)
         else:
-            response = requests.get(url, params=params, **config.requests_kwargs)
+            response = self.api._requests_session.get(url, params=params, **config.requests_kwargs)
 
         if 520 <= response.status_code < 530:
             if config.handler52x:
