@@ -31,6 +31,8 @@ class Config(object):
         self.consumer_secret = kwargs.get('consumer_secret', None)
         self.access_token = kwargs.get('access_token', None)
         self.access_token_secret = kwargs.get('access_token_secret', None)
+        self.api_key = kwargs.get("api_key", None)
+        self.api_key_secret = kwargs.get("api_key_secret", None)
 
         self.response_type = kwargs.get('response_type', None)
         self.requests_kwargs = kwargs.get('requests_kwargs', {})
@@ -41,7 +43,7 @@ class Config(object):
     def validate(self):
         """ Perform validation check on properties.
         """
-        if not self.auth_method in ['user:pass', 'user:md5', 'oauth']:
+        if not self.auth_method in ['user:pass', 'user:md5', 'oauth', 'api_key']:
             raise ImproperlyConfigured("No authentication method provided.")
         else:
             if self.auth_method == "user:pass":
@@ -56,6 +58,9 @@ class Config(object):
                 if not self.consumer_key or not self.consumer_secret or \
                    not self.access_token or not self.access_token_secret:
                     raise ImproperlyConfigured("OAuth consumer key and secret, and OAuth access token and secret required for 'oauth' authentication.")
+            elif self.auth_method == "api_key":
+                if not self.api_key or not self.api_key_secret:
+                    raise ImproperlyConfigured("API key and secret need to be specified.")
 
         if not self.response_type in ["json", "pson", "xml", "debug", None]:
             raise ImproperlyConfigured()

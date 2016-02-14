@@ -151,6 +151,12 @@ class Resource(object):
                 config.auth_method: "%s:%s" % (config.username, config.password),
             })
 
+        elif config.auth_method == 'api_key':
+            kwargs.update({
+                "api_token": config.api_key,
+                "api_token_secret": config.api_key_secret,
+            })
+
         elif config.auth_method == 'user:md5':
             if not config.md5_hash:
                 config.md5_hash = hashlib.md5(config.password).hexdigest()
